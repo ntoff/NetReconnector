@@ -1,28 +1,21 @@
 # NetReconnector
-The script for linux to reconnect net. The wifi of raspberrypi lost connection frequently, so this is for it.
+Script for Armbian 5.25 on a PCDuino3b/nano to take down the built in wifi adapter, unload the driver, reload the driver and bring back up the network in the event the network becomes unreachable.
 
-1.put the script into the home dir, like: /home/pi
+```
+cd ~
+git clone https://github.com/ntoff/NetReconnector
+cd NetReconnector
+nano NetReconnector.sh 
+```
+Check the network card and ping target, then make it executable if it isn't already with
 
-2.edit the parameter in the script
-```
-vim NetReconnector.sh
-# NetCard and PingTarget should be modified.
-```
+`chmod +x NetReconnector.sh`
 
-2.add x priority to the script
+Then edit the crontab with `crontab -e` and add this line which will run the script every 5 minutes.
 ```
-chmod +x NetReconnector.sh
-```
-
-3.add a task with crontab
-```
-crontab -e
-```
-
-4.add this line which means run the script every 5 minutes between 8:00 and 22:00.
-```
-*/5 8-22 * * * ~/NetReconnector.sh 
+*/5 * * * * ~/NetReconnector/NetReconnector.sh 
 ```
    
-5.log file generated in home dir, like: /home/pi/NetReconnector.log
+Log file will be generated as ~/wifisbroken.log
 
+    
